@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">TravelBot</string>
+    <string name="txt"><u>Review Last Ride?</u></string>
+    <string name="msg_hint">Enter your message</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="username">Username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="contact">contact</string>
+    <string name="email">Email</string>
+    <string name="link">Link</string>
+    <string name="register">Register</string>
+    <string name="review">How was your last ride ?</string>
+    <string name="daewoo">Daewoo</string>
+    <string name="skyways">Skyways</string>
+    <string name="niazi">Niazi</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="next">Next</string>
+    <string name="travelbot">TRAVELBOT</string>
+</resources>

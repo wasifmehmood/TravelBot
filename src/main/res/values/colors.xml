@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="yellow">#FCC727</color>
+    <color name="dark_yellow">#CA9805</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dark_green">#FF00574B</color>
+    <color name="grey">#AEAEBA</color>
+    <color name="bg_gradient_start">#CCCCCC</color>
+    <color name="bg_gradient_end">#E6E6E4</color>
+    <color name="blue">#5D7DA5</color>
+</resources>

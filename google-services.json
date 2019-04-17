@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "449589534992",
+    "firebase_url": "https://travelbot-d9a64.firebaseio.com",
+    "project_id": "travelbot-d9a64",
+    "storage_bucket": "travelbot-d9a64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449589534992:android:1ec636a88220a127",
+        "android_client_info": {
+          "package_name": "com.example.travelbot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449589534992-8f8mjnaq4o72eqqvolo3si509u6qgo1i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpEejFnqd0a57pL_24m-MnDvz9ThOvJt0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449589534992-8f8mjnaq4o72eqqvolo3si509u6qgo1i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
