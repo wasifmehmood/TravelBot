@@ -19,9 +19,9 @@
         <activity
             android:name=".Register"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".Login"
-            android:theme="@style/AppTheme" />
+        <!--<activity-->
+            <!--android:name=".Login"-->
+            <!--android:theme="@style/AppTheme" />-->
         <activity
             android:name=".Name"
             android:theme="@style/FullScreeTheme" /> <!-- <activity -->
