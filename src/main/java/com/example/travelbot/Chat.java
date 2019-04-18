@@ -35,10 +35,10 @@ public class Chat extends Fragment {
     private final int REQ_CODE_SPEECH_INPUT = 100;
 
     int flag = 0;                   //Check for floating btn image changed
-    String user_Name;
+
     String sMsg;                    //Get EditText msg & converted to String
-    Name name = new Name();
-    Intent nameIntent;
+
+
     //FDatabase db1;
     TextView tv;
 
@@ -51,8 +51,6 @@ public class Chat extends Fragment {
     FloatingActionButton fab1;
    // Integer[] botDrawables = {R.drawable.about,R.drawable.logout};
 
-
-    List<String> personMsgList;
     ListSingleton ls;
 
     @Nullable
@@ -66,9 +64,13 @@ public class Chat extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getActivity().setContentView(R.layout.activity_chat);
-Log.i("Which ","OnCreate");
+
+        Log.i("Which ","OnCreate");
         ls = ListSingleton.getInstance();
 
+        bot = new Bot();
+
+        //db1 = new FDatabase();
     }
 
     @Override
@@ -85,77 +87,21 @@ Log.i("Which ","OnCreate");
          */
         //getActivity().getWindow().setStatusBarColor(this.getResources().getColor(R.color.dark_yellow));
 
-
-        ls.botDrawList.add(R.drawable.ic_robot5);
-
-
-        ls.botMsgList.add("Where do you want to travel?");
-
+        customListView = getActivity().findViewById(R.id.msgListView);
         tv = getActivity().findViewById(R.id.reviewLinkTextView);
+        msg = getActivity().findViewById(R.id.msgEditText);
+        fab1 = getActivity().findViewById(R.id.fab);
+
+        updatingListView();
         tv.setMovementMethod(LinkMovementMethod.getInstance());
 
-        customListView = getActivity().findViewById(R.id.msgListView);
-
-
-
-        ls.customAdapter = new CustomAdapter(getActivity(), ls.botMsgList, ls.botDrawList);
-
-        customListView.setAdapter(ls.customAdapter);
-
-        msg = getActivity().findViewById(R.id.msgEditText);
-        //db1 = new FDatabase();
-
-        fab1 = getActivity().findViewById(R.id.fab);
         fab1.setImageResource(R.drawable.ic_mic);
         flag = 1;
-
 
         fab1.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
 
-                /**
-                 * if image on floating btn is of mic
-                 */
-                if(flag == 1)
-                {
-                    promptSpeechInput();
-
-                }
-
-                /**
-                 * if image on floating btn is of send
-                 */
-                else if (flag == 2)
-                {
-
-                    if(!(msg.getText().toString().trim().isEmpty()) ) {
-                        // db1.addData();
-                        sMsg = msg.getText().toString();
-
-                        ls.botMsgList.add(sMsg);
-                        ls.customAdapter.notifyDataSetChanged();
-
-                        bot = new Bot();
-                        bot.setMsg(sMsg);
-
-                        getMsg();
-
-                        msg.setText("");
-
-                        /**
-                         * For inflating another fragment
-                         */
-                        if(ls.botMsgList.size()>4) {
-                            NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
-                            navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) getActivity());
-
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    new Login()).commit();
-                            navigationView.setCheckedItem(R.id.nav_chat);
-                        }
-                    }
-
-                }
+                sendMsg(view);
 
             }
         });
@@ -166,7 +112,6 @@ Log.i("Which ","OnCreate");
     public void onPause() {
         super.onPause();
 
-
     }
 
     @Override
@@ -176,29 +121,73 @@ Log.i("Which ","OnCreate");
         ls.botMsgList.clear();
         ls.botDrawList.clear();
 
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
+    }
 
+    public void updatingListView()
+    {
+        ls.botDrawList.add(R.drawable.ic_robot5);
+        ls.botMsgList.add("Where do you want to travel?");
+        ls.customAdapter = new CustomAdapter(getActivity(), ls.botMsgList, ls.botDrawList);
+        customListView.setAdapter(ls.customAdapter);
     }
 
     public void sendMsg(View view) {
 
+        /**
+         * if image on floating btn is of mic
+         */
+        if(flag == 1)
+        {
+            promptSpeechInput();
+        }
+
+        /**
+         * if image on floating btn is of send
+         */
+        else if (flag == 2)
+        {
+
+            if(!(msg.getText().toString().trim().isEmpty()) ) {
+                // db1.addData();
+                sMsg = msg.getText().toString();
+
+                ls.botMsgList.add(sMsg);
+                ls.customAdapter.notifyDataSetChanged();
+
+                bot.setMsg(sMsg);
+
+                getMsg();
+
+                msg.setText("");
+
+                /**
+                 * For inflating another fragment(LOGIN)
+                 */
+                if(ls.botMsgList.size()>4) {
+                    NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+                    navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) getActivity());
+
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new Login()).commit();
+                    navigationView.setCheckedItem(R.id.nav_chat);
+                }
+            }
+
+        }
 
     }
-
 
 
     /**
      * Sending query to bot and getting response
      */
     public void getMsg(){
-
-        bot = new Bot();
 
         Bot.RetrieveFeedTask task = bot.new RetrieveFeedTask();
         task.execute(msg.getText().toString());
@@ -251,7 +240,6 @@ Log.i("Which ","OnCreate");
                         ls.botMsgList.add(sMsg);
                         ls.customAdapter.notifyDataSetChanged();
 
-                        bot = new Bot();
                         bot.setMsg(sMsg);
 
                         getMsg();

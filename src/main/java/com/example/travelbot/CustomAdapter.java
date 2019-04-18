@@ -11,22 +11,19 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by YOUSAF on 10/2/2017.
- */
 
 public class CustomAdapter extends BaseAdapter {
 
     Activity activity;
-    List<String> countriesName;
-    List<Integer> countriesRes;
+    List<String> msgList;
+    List<Integer> imageList;
     LayoutInflater layoutInflater;
 
 
-    public CustomAdapter(Activity activity, List<String> countriesName, List<Integer> countriesRes){
+    public CustomAdapter(Activity activity, List<String> msgList, List<Integer> imageList){
         this.activity = activity;
-        this.countriesName = countriesName;
-        this.countriesRes = countriesRes;
+        this.msgList = msgList;
+        this.imageList = imageList;
 
         layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -34,7 +31,7 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return countriesName.size();
+        return msgList.size();
     }
 
     @Override
@@ -58,8 +55,8 @@ public class CustomAdapter extends BaseAdapter {
         TextView countryTxtV = (TextView) v.findViewById(R.id.botMsg);
         ImageView countryImageV = (ImageView) v.findViewById(R.id.botImage);
 
-        countryTxtV.setText(countriesName.get(i));
-        countryImageV.setImageResource(countriesRes.get(0));
+        countryTxtV.setText(msgList.get(i));
+        countryImageV.setImageResource(imageList.get(0));
 
         return v;
     }
