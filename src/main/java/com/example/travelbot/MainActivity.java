@@ -41,8 +41,12 @@ public class MainActivity extends Activity {
                 }
 
                 else {
-                    Intent splashIntent = new Intent(MainActivity.this, Chat.class);
-                    startActivity(splashIntent);
+//                    Intent splashIntent = new Intent(MainActivity.this, Chat.class);
+//                    startActivity(splashIntent);
+//                    finish();
+
+                    Intent i = new Intent(MainActivity.this, NavDrawer.class);
+                    startActivity(i);
                     finish();
                 }
             }

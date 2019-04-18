@@ -30,7 +30,7 @@ if( !(et.getText().toString().isEmpty()) && !(et2.getText().toString().isEmpty()
     SharedPreferences prefs = getSharedPreferences(CHAT_PREFS, 0);
     prefs.edit().putString(NAME_KEY, name).apply();
 
-    Intent mainActivityIntent = new Intent(this, Chat.class);
+    Intent mainActivityIntent = new Intent(this, NavDrawer.class);
     finish();
     startActivity(mainActivityIntent);
 }

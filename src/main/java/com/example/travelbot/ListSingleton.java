@@ -21,6 +21,8 @@ class ListSingleton {
 
         botMsgList = new ArrayList<>();
         botDrawList = new ArrayList<>();
+
+
     }
 
 
