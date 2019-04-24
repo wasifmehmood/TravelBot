@@ -1,5 +1,6 @@
 package com.example.travelbot;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Login extends Fragment {
 
@@ -37,4 +39,5 @@ public class Login extends Fragment {
         tv.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
+
 }

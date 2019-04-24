@@ -4,78 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#FDE92A"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+    >
+    <!--tools:context=".Register"-->
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:background="#FDE92A"-->
+        <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />-->
 
     <EditText
-        android:id="@+id/registerUsernameView"
+        android:id="@+id/registerUsernameEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/username"
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="50dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginLeft="20dp"
+        android:inputType="textPersonName"/>
 
     <EditText
-        android:id="@+id/registerPassView"
+        android:id="@+id/registerPassEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password"
-        android:layout_below="@+id/registerUsernameView"
+        android:layout_below="@+id/registerUsernameEt"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:inputType="textPassword"/>
 
     <EditText
-        android:id="@+id/registerContactView"
+        android:id="@+id/registerContactEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/contact"
-        android:layout_below="@+id/registerPassView"
+        android:layout_below="@+id/registerPassEt"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:inputType="phone"/>
 
     <EditText
-        android:id="@+id/registerEmailView"
+        android:id="@+id/registerEmailEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email"
-        android:layout_below="@+id/registerContactView"
+        android:layout_below="@+id/registerContactEt"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:inputType="textEmailAddress"/>
 
     <EditText
-        android:id="@+id/registerLinkView"
+        android:id="@+id/registerLinkEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/link"
-        android:layout_below="@+id/registerEmailView"
+        android:layout_below="@+id/registerEmailEt"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:inputType="textUri"/>
 
     <Button
         android:id="@+id/registerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register"
-        android:layout_below="@+id/registerLinkView"
+        android:layout_below="@+id/registerLinkEt"
         android:layout_alignParentRight="true"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp" />
 
     <TextView
-        android:id="@+id/regLoginView"
+        android:id="@+id/regLoginTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/registerBtn"

@@ -1,28 +1,27 @@
 package com.example.travelbot;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 public class NavDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
 
+    ListSingleton ls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_nav);
+
+        ls = ListSingleton.getInstance();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,14 +60,18 @@ public class NavDrawer extends AppCompatActivity implements NavigationView.OnNav
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Chat()).commit();
                 break;
-            case R.id.nav_chat:
+//            case R.id.nav_chat:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                        new Login()).commit();
+//                break;
+            case R.id.nav_login:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Login()).commit();
                 break;
-//            case R.id.nav_profile:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                        new ProfileFragment()).commit();
-//                break;
+            case R.id.nav_register:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new Register()).commit();
+                break;
             case R.id.nav_share:
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
                 break;
@@ -81,12 +84,35 @@ public class NavDrawer extends AppCompatActivity implements NavigationView.OnNav
         return true;
     }
 
+
     @Override
     public void onBackPressed() {
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+//        else {
+//            super.onBackPressed();
+//        }
+
+        else if(ls.fragmentFlag){
+
             super.onBackPressed();
+        }
+
+        else if (!(ls.fragmentFlag)) {
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new Chat()).commit();
+
+        }
+
+
+        else {
+            getSupportFragmentManager().popBackStack();
         }
     }
 }

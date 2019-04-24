@@ -3,6 +3,7 @@ package com.example.travelbot;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -66,7 +67,7 @@ public class Chat extends Fragment {
         //getActivity().setContentView(R.layout.activity_chat);
 
         Log.i("Which ","OnCreate");
-        ls = ListSingleton.getInstance();
+
 
         bot = new Bot();
 
@@ -288,5 +289,22 @@ public class Chat extends Fragment {
 
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        ls = ListSingleton.getInstance();
+        ls.fragmentFlag = true;
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        ls.fragmentFlag = false;
+
+    }
 }
 

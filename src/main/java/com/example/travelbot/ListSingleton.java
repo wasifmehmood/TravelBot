@@ -15,13 +15,14 @@ class ListSingleton {
     List<String> botMsgList;
     CustomAdapter customAdapter;
     SharedPreferences prefs;
+    Boolean fragmentFlag;
     //private constructor.
 
     private ListSingleton(){
 
         botMsgList = new ArrayList<>();
         botDrawList = new ArrayList<>();
-
+        fragmentFlag = true;
 
     }
 
