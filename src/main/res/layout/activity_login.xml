@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     >
     <!--tools:context=".Login"-->
     <!--<android.support.v7.widget.Toolbar-->
@@ -14,31 +15,32 @@
         <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />-->
 
     <AutoCompleteTextView
-        android:id="@+id/loginUsernameView"
+        android:id="@+id/loginUsernameEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/username"
+        android:hint="@string/email"
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="170dp"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"/>
 
     <EditText
-        android:id="@+id/loginPassView"
+        android:id="@+id/loginPassEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password"
-        android:layout_below="@+id/loginUsernameView"
+        android:layout_below="@+id/loginUsernameEt"
         android:layout_marginTop="40dp"
         android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp" />
+        android:layout_marginLeft="30dp"
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
-        android:layout_below="@+id/loginPassView"
+        android:layout_below="@+id/loginPassEt"
         android:layout_marginTop="50dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp" />

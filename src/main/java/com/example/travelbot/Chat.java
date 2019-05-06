@@ -1,14 +1,12 @@
 package com.example.travelbot;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.speech.RecognizerIntent;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -19,17 +17,14 @@ import android.text.method.LinkMovementMethod;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Chat extends Fragment {
 
@@ -176,7 +171,7 @@ public class Chat extends Fragment {
 
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             new Login()).commit();
-                    navigationView.setCheckedItem(R.id.nav_chat);
+                    navigationView.setCheckedItem(R.id.nav_reviews);
                 }
             }
 
@@ -285,7 +280,6 @@ public class Chat extends Fragment {
                 }
             }
         });
-
 
     }
 

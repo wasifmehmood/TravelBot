@@ -9,31 +9,31 @@
             android:icon="@drawable/ic_home"
             android:title="Home" />
         <item
-            android:id="@+id/nav_chat"
+            android:id="@+id/nav_reviews"
             android:icon="@drawable/ic_review"
             android:title="Reviews" />
-        <item
-            android:id="@+id/nav_login"
-            android:icon="@drawable/ic_account"
-            android:title="Agency login" />
+
         <item
             android:id="@+id/nav_register"
             android:icon="@drawable/ic_register"
             android:title="Agency Register" />
-    </group>
 
-    <item android:title="">
-        <menu>
+
+            <item android:title="" />
 
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_settings"
                 android:title="Settings" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_login"
+                android:icon="@drawable/ic_account"
+                android:title="Agency Login" />
+            <item
+                android:id="@+id/nav_quit"
                 android:icon="@drawable/ic_close"
                 android:title="Quit" />
-        </menu>
-    </item>
+
+    </group>
 
 </menu>

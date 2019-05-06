@@ -1,5 +1,6 @@
 package com.example.travelbot;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -16,11 +17,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 public class Register extends Fragment {
 
     TextView tv;
     EditText regUsernameEt, regPassEt, regContactEt, regEmailEt, regLinkEt;
     Button regBtn;
+    ListSingleton ls;
+    String usernameStr, passStr, contactStr, emailStr, linkStr;
+    Boolean usernameCheck, passCheck, contactCheck, emailCheck, linkCheck;
 
     @Nullable
     @Override
@@ -34,6 +49,7 @@ public class Register extends Fragment {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_register);
 
+        ls = ListSingleton.getInstance();
     }
 
     @Override
@@ -63,8 +79,6 @@ public class Register extends Fragment {
 
     }
 
-    String usernameStr, passStr, contactStr, emailStr, linkStr;
-    Boolean usernameCheck, passCheck, contactCheck, emailCheck, linkCheck;
 
     public void regBtnClick()
     {
@@ -76,50 +90,95 @@ public class Register extends Fragment {
 
         usernameCheck = (usernameStr.length() > 3);
         passCheck = (passStr.length() > 5);
-        contactCheck = true;
+        contactCheck = isValidMobile(contactStr);
         emailCheck = isEmailValid(emailStr);
         linkCheck = Patterns.WEB_URL.matcher(linkStr).matches();
 
-        if(usernameCheck)
-        {
-            if(passCheck)
-            {
-                if (contactCheck)
-                {
-                    if (emailCheck)
-                    {
-                        if (linkCheck)
-                        {
-                            Toast.makeText(getActivity(), "Valid", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                        regLinkEt.setError("Invalid");
-                        }
-                    }
-                    else
-                    {
-                        regEmailEt.setError("Invalid");
-                    }
-                }
-                else
-                {
-                regContactEt.setError("Invalid");
-                }
-            }
-            else
-            {
-            regPassEt.setError("Must be greater than 5");
-            }
-        }
-        else
+        boolean isFilled = true;
+
+        if(!(usernameCheck))
         {
             regUsernameEt.setError("Must be greater than 3");
+            isFilled=false;
         }
+
+        if(!(passCheck))
+        {
+            regPassEt.setError("Must be greater than 5");
+
+            isFilled=false;
+        }
+
+        if (!(contactCheck))
+        {
+            regContactEt.setError("Invalid");
+            isFilled=false;
+        }
+
+        if (!(emailCheck))
+        {
+            regEmailEt.setError("Invalid");
+            isFilled=false;
+        }
+
+        if (!(linkCheck))
+        {
+
+            regLinkEt.setError("Invalid");
+            isFilled=false;
+
+        }
+        if(isFilled)
+        {
+            createUser();
+        }
+
     }
 
     boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private boolean isValidMobile(String phone) {
+        boolean check;
+
+        if(phone.length() < 6 || phone.length() > 13)
+        {
+            check = false;
+        }
+        else
+        {
+            check = true;
+        }
+        return check;
+    }
+
+    public void createUser()
+    {
+        ls.mAuth.createUserWithEmailAndPassword(emailStr, passStr).addOnCompleteListener(Objects.requireNonNull(getActivity()), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                Log.d("", "createUserWithEmail:onComplete:" + task.isSuccessful());
+
+                Map map = new HashMap<>();
+                map.put("user_id", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                map.put("username", usernameStr);
+                map.put("contact", contactStr);
+                map.put("email", emailStr);
+                map.put("link", linkStr);
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Agencies").child(usernameStr).child("Info");
+                reference.setValue(map);
+
+
+                if (!task.isSuccessful())
+                {
+                    Toast.makeText(getActivity(),
+                            "Authentication failed.",  Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 //    private TextWatcher regTextWatcher = new TextWatcher() {
