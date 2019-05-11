@@ -1,5 +1,6 @@
 package com.example.travelbot;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -19,6 +20,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class Login extends Fragment {
 
@@ -28,6 +37,7 @@ public class Login extends Fragment {
     Button loginBtn;
     ListSingleton ls;
     MenuItem menuItem;
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Agencies");
 
     @Nullable
     @Override
@@ -60,6 +70,7 @@ public class Login extends Fragment {
             public void onClick(View v) {
 
                 login();
+
             }
         });
     }
@@ -81,7 +92,15 @@ public class Login extends Fragment {
                             Toast.makeText(getActivity(),
                                     "Authentication Success.", Toast.LENGTH_SHORT).show();
 
-                            setTitle();
+                            FDatabase fDatabase = new FDatabase();
+                            fDatabase.readData("agencies", "user_id", ls.mAuth.getUid());
+//                            reference.orderByChild("user_id").equalTo(ls.mAuth.getUid());
+                            ls.uId = ls.mAuth.getUid();
+                            ls.email = getEmailStr;
+//                            readFromDatabase();
+
+                            Intent i = new Intent(getActivity(), AgencyNavDrawer.class);
+                            startActivity(i);
 
                             if (!task.isSuccessful()) {
                                 Toast.makeText(getActivity(),
@@ -90,6 +109,7 @@ public class Login extends Fragment {
 
                         }
                     });
+
         }
 
         else if(getEmailStr == null && getPassStr == null)
@@ -106,6 +126,31 @@ public class Login extends Fragment {
             getPass.setError("Field required");
         }
     }
+
+//    public void readFromDatabase()
+//    {
+//
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
+//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                        HashMap<String, String> map = (HashMap<String, String>) snapshot.getValue();
+//                        ls.username = map.get("username");
+//
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//
+//    }
 
     public void setTitle()
     {

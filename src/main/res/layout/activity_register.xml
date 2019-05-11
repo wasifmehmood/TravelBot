@@ -1,95 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
-    >
-    <!--tools:context=".Register"-->
-    <!--<android.support.v7.widget.Toolbar-->
+    android:fillViewport="true">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg"
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+        <!--tools:context=".Register"-->
+        <!--<android.support.v7.widget.Toolbar-->
         <!--android:id="@+id/toolbar"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="?attr/actionBarSize"-->
         <!--android:background="#FDE92A"-->
         <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />-->
 
-    <EditText
-        android:id="@+id/registerUsernameEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/username"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:inputType="textPersonName"/>
+        <EditText
+            android:id="@+id/registerUsernameEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/username"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/registerPassEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:layout_below="@+id/registerUsernameEt"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:inputType="textPassword"/>
+        <EditText
+            android:id="@+id/registerPassEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerUsernameEt"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
 
-    <EditText
-        android:id="@+id/registerContactEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/contact"
-        android:layout_below="@+id/registerPassEt"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:inputType="phone"/>
+        <EditText
+            android:id="@+id/registerContactEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerPassEt"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/contact"
+            android:inputType="phone" />
 
-    <EditText
-        android:id="@+id/registerEmailEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/email"
-        android:layout_below="@+id/registerContactEt"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:inputType="textEmailAddress"/>
+        <EditText
+            android:id="@+id/registerEmailEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerContactEt"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
 
-    <EditText
-        android:id="@+id/registerLinkEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/link"
-        android:layout_below="@+id/registerEmailEt"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:inputType="textUri"/>
+        <EditText
+            android:id="@+id/registerLinkEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerEmailEt"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/link"
+            android:inputType="textUri" />
 
-    <Button
-        android:id="@+id/registerBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register"
-        android:layout_below="@+id/registerLinkEt"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp" />
+        <Button
+            android:id="@+id/registerBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerLinkEt"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/register" />
 
-    <TextView
-        android:id="@+id/regLoginTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/registerBtn"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="25dp"
-        android:text="@string/login"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/regLoginTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerBtn"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="25dp"
+            android:text="@string/login"
+            android:textSize="18sp" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

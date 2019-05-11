@@ -63,7 +63,6 @@ public class Chat extends Fragment {
 
         Log.i("Which ","OnCreate");
 
-
         bot = new Bot();
 
         //db1 = new FDatabase();
@@ -73,7 +72,11 @@ public class Chat extends Fragment {
     public void onStart() {
         super.onStart();
 
+        ls = ListSingleton.getInstance();
+        ls.fragmentFlag = true;
+
             if(ls.botMsgList.size() > 0) {
+                Log.d("test", ""+ls.botMsgList.get(0));
 
                 ls.botMsgList.clear();
                 ls.customAdapter.notifyDataSetChanged();
@@ -82,6 +85,7 @@ public class Chat extends Fragment {
          * For Changing Status Bar Color
          */
         //getActivity().getWindow().setStatusBarColor(this.getResources().getColor(R.color.dark_yellow));
+        final NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
 
         customListView = getActivity().findViewById(R.id.msgListView);
         tv = getActivity().findViewById(R.id.reviewLinkTextView);
@@ -90,6 +94,15 @@ public class Chat extends Fragment {
 
         updatingListView();
         tv.setMovementMethod(LinkMovementMethod.getInstance());
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new GiveReview()).commit();
+
+            }
+        });
 
         fab1.setImageResource(R.drawable.ic_mic);
         flag = 1;
@@ -107,15 +120,16 @@ public class Chat extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-
+        ls.fragmentFlag = false;
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        Log.d("testS", ""+ls.botMsgList.get(0));
 
-        ls.botMsgList.clear();
-        ls.botDrawList.clear();
+//        ls.botMsgList.clear();
+//        ls.botDrawList.clear();
 
     }
 
@@ -129,6 +143,7 @@ public class Chat extends Fragment {
     {
         ls.botDrawList.add(R.drawable.ic_robot5);
         ls.botMsgList.add("Where do you want to travel?");
+        Log.d("testU", ""+ls.botMsgList.get(0));
         ls.customAdapter = new CustomAdapter(getActivity(), ls.botMsgList, ls.botDrawList);
         customListView.setAdapter(ls.customAdapter);
     }
@@ -288,17 +303,15 @@ public class Chat extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        ls = ListSingleton.getInstance();
-        ls.fragmentFlag = true;
-
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-
-        ls.fragmentFlag = false;
-
+//        Log.d("testD", ""+ls.botMsgList.get(0));
+//        ls.botMsgList.clear();
+//        ls.botDrawList.clear();
+////        ls.customAdapter.notifyDataSetChanged();
     }
 }
 

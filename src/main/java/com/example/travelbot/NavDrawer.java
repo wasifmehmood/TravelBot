@@ -75,22 +75,13 @@ public class NavDrawer extends AppCompatActivity implements NavigationView.OnNav
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Chat()).commit();
                 break;
-//            case R.id.nav_chat:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                        new Login()).commit();
-//                break;
+            case R.id.nav_reviews:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new Reviews()).commit();
+                break;
             case R.id.nav_login:
-                switch (item.getTitle().toString())
-                {
-                    case "Agency Login":
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new Login()).commit();
-                        break;
-                    case "Log Out":
-                        FirebaseAuth.getInstance().signOut();
-                        menuItem.setTitle("Agency Login");
-                        break;
-                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new Login()).commit();
                 break;
             case R.id.nav_register:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

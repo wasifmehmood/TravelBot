@@ -6,7 +6,7 @@
         android:angle="270"
         android:endColor="@color/yellow"
         android:startColor="@color/dark_yellow"
-        android:type="linear" />
+        android:type="sweep" />
 
     <corners
         android:bottomLeftRadius="10dp"

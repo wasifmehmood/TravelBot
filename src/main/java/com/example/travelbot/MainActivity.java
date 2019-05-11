@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class MainActivity extends Activity {
 
@@ -22,6 +24,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ls = ListSingleton.getInstance();
+
+        final FirebaseUser currentUser = ls.mAuth.getCurrentUser();
 
         botTextView = findViewById(R.id.textViewTravel);
         //botTextView.animate().alpha(1).setDuration(1000);
@@ -45,9 +49,19 @@ public class MainActivity extends Activity {
 //                    startActivity(splashIntent);
 //                    finish();
 
-                    Intent i = new Intent(MainActivity.this, NavDrawer.class);
-                    startActivity(i);
-                    finish();
+                    if (currentUser == null)
+                    {
+                        Intent i = new Intent(MainActivity.this, NavDrawer.class);
+                        startActivity(i);
+                        finish();
+                    }
+
+                    else
+                    {
+                        Intent i = new Intent(MainActivity.this, AgencyNavDrawer.class);
+                        startActivity(i);
+                        finish();
+                    }
                 }
             }
         },SPLASH_TIME_OUT);
