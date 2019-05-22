@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -367,5 +368,63 @@ String from;
         };
         thread.start();
     }
+    void readResultsData(final Activity activity)
+    {
 
+
+        db.collection("services").whereEqualTo("to", ls.city2.toLowerCase())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("city", " => " + ls.city2.toLowerCase());
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Log.d("bbbb", "bbb");
+                                Log.d("bbbb", document.getId() + " => " + document.getData());
+
+                                HashMap<String, Object> map = (HashMap<String, Object>) document.getData();
+                                ls.resultUtilsList.add(new ResultUtils(map.get("name"),map.get("type"), map.get("stars"), map.get("price")));
+                                Log.d("bbbb", document.getId() + " => " + map.get("name"));
+
+                                threadResult(activity);
+
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+    void threadResult(final Activity activity)
+    {
+        thread = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Log.d("b", "ccc");
+                    synchronized (this) {
+                        wait(4);
+
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                ls.resultsCustomAdapter = new ResultsCustomAdapter(activity, ls.resultUtilsList);
+                                ls.resultListView.setAdapter(ls.resultsCustomAdapter);
+                                Log.d("bbbb", "cxcc");
+                            }
+                        });
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        thread.start();
+    }
 }

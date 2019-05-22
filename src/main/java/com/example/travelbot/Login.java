@@ -1,6 +1,10 @@
 package com.example.travelbot;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -27,6 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 
 public class Login extends Fragment {
@@ -69,42 +76,55 @@ public class Login extends Fragment {
             @Override
             public void onClick(View v) {
 
-                login();
-
+                    login();
             }
         });
     }
 
+    boolean isConnected;
 
-    public void login()
-    {
+    public void login()  {
+
+        isInternetConnected();
+
+        if(!(isConnected))
+        {
+            Toast.makeText(getActivity(),
+                    "Not connected to the internet.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         getEmailStr = getEmail.getText().toString();
         getPassStr = getPass.getText().toString();
 
-        if(getEmailStr != null && getPassStr != null)
+        if(!(getEmailStr.equals("")) && !(getPassStr.equals("")))
         {
             //Sign In
             ls.mAuth.signInWithEmailAndPassword(getEmailStr, getPassStr)
                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d("", "signInWithEmail:onComplete:" + task.isSuccessful());
-                            Toast.makeText(getActivity(),
-                                    "Authentication Success.", Toast.LENGTH_SHORT).show();
+                        public void onComplete(@NonNull final Task<AuthResult> task) {
 
-                            FDatabase fDatabase = new FDatabase();
-                            fDatabase.readData("agencies", "user_id", ls.mAuth.getUid());
+                            if(task.isSuccessful()) {
+                                Log.d("ssss", "signInWithEmail:onComplete:" + task.isSuccessful());
+                                Toast.makeText(getActivity(),
+                                        "Authentication Success.", Toast.LENGTH_LONG).show();
+
+                                FDatabase fDatabase = new FDatabase();
+                                fDatabase.readData("agencies", "user_id", ls.mAuth.getUid());
 //                            reference.orderByChild("user_id").equalTo(ls.mAuth.getUid());
-                            ls.uId = ls.mAuth.getUid();
-                            ls.email = getEmailStr;
+                                ls.uId = ls.mAuth.getUid();
+                                ls.email = getEmailStr;
 //                            readFromDatabase();
 
-                            Intent i = new Intent(getActivity(), AgencyNavDrawer.class);
-                            startActivity(i);
+                                ProgressDialog dialog = ProgressDialog.show(getActivity(), "",
+                                        "Signing In. Please wait...", true);
+                                thread();
 
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(getActivity(),
-                                        "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            }
+                            else if (!task.isSuccessful()) {
+                                Toast.makeText(getActivity(), "Username or password incorrect.", Toast.LENGTH_LONG).show();
+                                Log.d("sss", "signInWithEmail:onComplete:" + task.isSuccessful());
                             }
 
                         }
@@ -112,19 +132,57 @@ public class Login extends Fragment {
 
         }
 
-        else if(getEmailStr == null && getPassStr == null)
+        else if(getEmailStr.equals("") && getPassStr.equals(""))
         {
             getEmail.setError("Field required");
             getPass.setError("Field required");
         }
-        else if(getEmailStr == null)
+        else if(getEmailStr.equals(""))
         {
             getEmail.setError("Field required");
         }
-        else if(getPassStr == null)
+        else if(getPassStr.equals(""))
         {
             getPass.setError("Field required");
         }
+    }
+
+    void isInternetConnected()
+    {
+        ConnectivityManager cm =
+                (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+    }
+
+    void thread()
+    {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                synchronized (this) {
+                    try {
+                        wait(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+
+                            Intent i = new Intent(getActivity(), AgencyNavDrawer.class);
+                            startActivity(i);
+                        }
+                    });
+                }
+            }
+        });
+
+        thread.start();
     }
 
 //    public void readFromDatabase()

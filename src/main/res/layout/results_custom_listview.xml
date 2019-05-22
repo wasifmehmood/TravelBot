@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/resultNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daewoo"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAllCaps="true"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/resultTypeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/resultNameTv"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text="luxury"
+        android:textAllCaps="true"/>
+
+    <TextView
+        android:id="@+id/resultStarsTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/resultTypeTv"
+        android:layout_marginLeft="20dp"
+        android:text="Stars:"
+         />
+    <TextView
+        android:id="@+id/resultPriceTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/resultStarsTv"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:text="Price: " />
+</RelativeLayout>

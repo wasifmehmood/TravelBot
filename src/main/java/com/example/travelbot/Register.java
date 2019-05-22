@@ -1,6 +1,10 @@
 package com.example.travelbot;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -38,7 +42,8 @@ public class Register extends Fragment {
     ListSingleton ls;
     String usernameStr, passStr, contactStr, emailStr, linkStr;
     Boolean usernameCheck, passCheck, contactCheck, emailCheck, linkCheck;
-
+    Activity activity;
+    boolean isConnected;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,15 +56,17 @@ public class Register extends Fragment {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_register);
 
+
         ls = ListSingleton.getInstance();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
+        activity = getActivity();
         tv = getActivity().findViewById(R.id.regLoginTv);
         tv.setMovementMethod(LinkMovementMethod.getInstance());
+
 
         regUsernameEt = getActivity().findViewById(R.id.registerUsernameEt);
         regPassEt = getActivity().findViewById(R.id.registerPassEt);
@@ -84,6 +91,15 @@ public class Register extends Fragment {
 
     public void regBtnClick()
     {
+        isInternetConnected();
+
+        if(!(isConnected))
+        {
+            Toast.makeText(getActivity(),
+                    "Not connected to the internet.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        
         usernameStr = regUsernameEt.getText().toString();
         passStr = regPassEt.getText().toString();
         contactStr = regContactEt.getText().toString();
@@ -135,7 +151,7 @@ public class Register extends Fragment {
         {
             createUser();
         }
-
+        Log.d("wwww", "createUserWithEmail:onComplete:" + isFilled);
     }
 
     boolean isEmailValid(CharSequence email) {
@@ -158,48 +174,62 @@ public class Register extends Fragment {
 
     public void createUser()
     {
-        ls.mAuth.createUserWithEmailAndPassword(emailStr, passStr).addOnCompleteListener(Objects.requireNonNull(getActivity()), new OnCompleteListener<AuthResult>() {
+
+        ls.mAuth.createUserWithEmailAndPassword(emailStr, passStr).addOnCompleteListener(Objects.requireNonNull(getActivity()),
+                new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
-                Log.d("", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                Log.d("wwww", "createUserWithEmail:onComplete:" + task.isSuccessful());
 
 //                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Agencies");
 //                String id = reference.push().getKey();
+                Log.d("wwww", "createUserWithEmail:onComplete:" + ls.mAuth.getCurrentUser().getUid());
 
-                Map<String, Object> map = new HashMap<>();
-                map.put("user_id", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                map.put("username", usernameStr);
-                map.put("contact", contactStr);
-                map.put("email", emailStr);
-                map.put("link", linkStr);
+                if (task.isSuccessful()) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("user_id", ls.mAuth.getCurrentUser().getUid());
+                    map.put("username", usernameStr);
+                    map.put("contact", contactStr);
+                    map.put("email", emailStr);
+                    map.put("link", linkStr);
 //                map.put("key", id);
+                    Log.d("wwww", "createUserWithEmail:onComplete:" + ls.mAuth.getCurrentUser().getUid());
 
-                String collection = "agencies";
+                    String collection = "agencies";
 
-                FDatabase fDatabase = new FDatabase();
-                fDatabase.addData(collection, map);
+                    FDatabase fDatabase = new FDatabase();
+                    fDatabase.addData(collection, map);
 
 
 //                reference.child(id).setValue(map);
 
-                ls.username = usernameStr;
+                    ls.username = usernameStr;
 
 //                SharedPreferences prefs = getActivity().getSharedPreferences("PREFS", 0);
 //                prefs.edit().putString("key", id).apply();
 
-                snackBar();
+                    snackBar();
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Login()).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Login()).commit();
+                }
 
-
-                if (!task.isSuccessful())
+                else if (!task.isSuccessful())
                 {
-                    Toast.makeText(getActivity(),
-                            "Authentication failed.",  Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity,
+                            "Email already exist",  Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+    void isInternetConnected()
+    {
+        ConnectivityManager cm =
+                (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
     }
 
     public void snackBar() {

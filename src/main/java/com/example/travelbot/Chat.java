@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -112,11 +114,51 @@ public class Chat extends Fragment {
 
                 sendMsg(view);
 
+                thread();
+
             }
         });
 
     }
 
+    void thread()
+    {
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Log.d("b", "ccc");
+                    synchronized (this) {
+                        wait(1000);
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Log.d("karma ", "response is " + ls.priority+" CITY"+ls.city);
+
+                                if(!(ls.city.equals("")) && !(ls.priority.equals("")))
+                                {
+                                    NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+                                    navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) getActivity());
+
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                            new Results()).commit();
+
+                                }
+
+                            }
+                        });
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        thread.start();
+    }
     @Override
     public void onPause() {
         super.onPause();
@@ -180,14 +222,14 @@ public class Chat extends Fragment {
                 /**
                  * For inflating another fragment(LOGIN)
                  */
-                if(ls.botMsgList.size()>4) {
-                    NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
-                    navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) getActivity());
-
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new Login()).commit();
-                    navigationView.setCheckedItem(R.id.nav_reviews);
-                }
+//                if(ls.botMsgList.size()>4) {
+//                    NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+//                    navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) getActivity());
+//
+//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                            new Login()).commit();
+//                    navigationView.setCheckedItem(R.id.nav_reviews);
+//                }
             }
 
         }

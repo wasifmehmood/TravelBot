@@ -17,14 +17,17 @@ public class Bot {
 
     Chat c;
     String msg;
-
-    ListSingleton ls;
-
+    int count = 0;
+    ListSingleton ls = ListSingleton.getInstance();
+    String priority = "";
     public Bot(){
 
         c = new Chat();
 
     }
+
+    Boolean flag = true;
+
 
     public String getMsg(){
         return msg;
@@ -33,7 +36,7 @@ public class Bot {
     public void setMsg(String msg0){
         msg=msg0;
     }
-
+    String city = "";
     // Create GetText Metod
     public String getText(String query) throws UnsupportedEncodingException {
 
@@ -93,15 +96,43 @@ public class Bot {
             JSONObject object = object1.getJSONObject("result");
             JSONObject fulfillment = null;
             String speech = null;
+            JSONObject parameters = null;
+            String variable = null;
+
+
 //            if (object.has("fulfillment")) {
             fulfillment = object.getJSONObject("fulfillment");
 //                if (fulfillment.has("speech")) {
             speech = fulfillment.optString("speech");
+            parameters = object.getJSONObject("parameters");
+            variable = parameters.optString("geo-city");
+
+
+            if(!(variable.equals("")) && flag) {
+
+                ls.city = variable;
+                count++;
+                flag = false;
+            }
+            if(!(ls.city.equals("")) && count >= 2)
+            {
+                variable = parameters.optString("any");
+                ls.priority = variable;
+                flag = true;
+            }
+            count++;
+
+
 //                }
 //            }
 
             Log.i("Did "," execute ");
             Log.d("karma ", "response is " + text);
+            Log.d("karma ", "response is " + fulfillment);
+            Log.d("karma ", "response is " + speech);
+            Log.d("karma ", "response is " + variable);
+            Log.d("karma ", "response is " + ls.city+" "+ls.priority);
+
             return speech;
 
         } catch (Exception ex) {
@@ -140,7 +171,7 @@ public class Bot {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            ls = ListSingleton.getInstance();
+//            ls = ListSingleton.getInstance();
 
             ls.botMsgList.add(s);
             ls.customAdapter.notifyDataSetChanged();

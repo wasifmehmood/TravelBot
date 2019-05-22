@@ -87,8 +87,9 @@ public class NavDrawer extends AppCompatActivity implements NavigationView.OnNav
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Register()).commit();
                 break;
-            case R.id.nav_settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+            case R.id.nav_about:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new About()).commit();
                 break;
 //            case R.id.nav_login:
 //                FirebaseAuth.getInstance().signOut();

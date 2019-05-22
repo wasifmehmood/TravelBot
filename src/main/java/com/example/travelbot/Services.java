@@ -2,6 +2,7 @@ package com.example.travelbot;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -41,6 +42,10 @@ public class Services extends Fragment {
     String key;
     ListSingleton ls = ListSingleton.getInstance();
     FDatabase fDatabase;
+    Activity activity;
+    ListView serviceListView;
+    String uId;
+    ServiceCustomAdapter serviceCustomAdapter;
 
     @Nullable
     @Override
@@ -57,8 +62,13 @@ public class Services extends Fragment {
 //        setContentView(R.layout.activity_services);
 
         fDatabase = new FDatabase();
+
         uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final ProgressDialog dialog = ProgressDialog.show(getActivity(), "",
+                "Loading. Please wait...", true);
+
         fDatabase.readOwnServicesData(uId);
+
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
@@ -71,6 +81,7 @@ public class Services extends Fragment {
                                 serviceCustomAdapter = new ServiceCustomAdapter(activity, ls.serviceUtilsList);
                                 Log.d("b", "ccc");
                                 serviceListView.setAdapter(serviceCustomAdapter);
+                                dialog.dismiss();
                             }
                         });
 
@@ -78,10 +89,6 @@ public class Services extends Fragment {
 
     }
 
-    Activity activity;
-    ListView serviceListView;
-    String uId;
-    ServiceCustomAdapter serviceCustomAdapter;
 
     @Override
     public void onStart() {
@@ -176,6 +183,7 @@ public class Services extends Fragment {
 //                        .child(serviceFromStr).child(serviceToStr).child(serviceTypeStr);
 
 //                Map<String, Object> map1 = new HashMap<>();
+                int i = Integer.parseInt(servicePriceStr);
                 map.put("price", servicePriceStr);
                 map.put("stars", "0");
 //                map1.put("type", reference.getKey());

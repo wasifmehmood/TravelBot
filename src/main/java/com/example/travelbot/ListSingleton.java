@@ -33,9 +33,17 @@ class ListSingleton {
     float stars;
     List<ServiceUtils> serviceUtilsList;
     List<ReviewUtils> reviewUtilsList;
+    List<ResultUtils> resultUtilsList;
 
     ReviewsCustomAdapter reviewCustomAdapter;
+    ResultsCustomAdapter resultsCustomAdapter;
     ListView reviewListView;
+    ListView resultListView;
+
+    String city;
+    String priority;
+    String city2;
+    String priority2;
     //private constructor.
 
     private ListSingleton(){
@@ -61,6 +69,13 @@ class ListSingleton {
         serviceUtilsList = new ArrayList<>();
         reviewUtilsList = new ArrayList<>();
         reviewListView = null;
+        resultUtilsList = new ArrayList<>();
+        resultListView = null;
+
+        city = "";
+        priority = "";
+        city2 = "";
+        priority2 = "";
     }
 
 
