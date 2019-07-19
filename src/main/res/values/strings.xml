@@ -22,4 +22,10 @@
     <string name="last_name">Last Name</string>
     <string name="next">Next</string>
     <string name="travelbot">TRAVELBOT</string>
+
+    <string-array name="type_arrays">
+        <item>Economy</item>
+        <item>Standard</item>
+        <item>Luxury</item>
+    </string-array>
 </resources>

@@ -65,8 +65,6 @@ public class NavDrawer extends AppCompatActivity implements NavigationView.OnNav
     }
 
 
-
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 

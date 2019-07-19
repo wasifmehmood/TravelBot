@@ -44,6 +44,15 @@ class ListSingleton {
     String priority;
     String city2;
     String priority2;
+    boolean luxury;
+    boolean economy;
+    boolean standard;
+    boolean price;
+    String typeNo;
+    String type;
+
+    boolean serviceFragment;
+
     //private constructor.
 
     private ListSingleton(){
@@ -76,6 +85,15 @@ class ListSingleton {
         priority = "";
         city2 = "";
         priority2 = "";
+        luxury = false;
+        economy = false;
+        standard = false;
+        price = false;
+
+        typeNo = null;
+        type = null;
+
+        serviceFragment = false;
     }
 
 

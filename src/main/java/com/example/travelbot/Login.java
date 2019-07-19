@@ -56,7 +56,6 @@ public class Login extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // getActivity().setContentView(R.layout.activity_login);
 
     }
 
@@ -65,8 +64,8 @@ public class Login extends Fragment {
         super.onStart();
 
         ls = ListSingleton.getInstance();
-        tv = getActivity().findViewById(R.id.loginTextView);
-        tv.setMovementMethod(LinkMovementMethod.getInstance());
+//        tv = getActivity().findViewById(R.id.loginTextView);
+//        tv.setMovementMethod(LinkMovementMethod.getInstance());
 
         getEmail = getActivity().findViewById(R.id.loginUsernameEt);
         getPass = getActivity().findViewById(R.id.loginPassEt);
@@ -185,30 +184,6 @@ public class Login extends Fragment {
         thread.start();
     }
 
-//    public void readFromDatabase()
-//    {
-//
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        HashMap<String, String> map = (HashMap<String, String>) snapshot.getValue();
-//                        ls.username = map.get("username");
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//
-//    }
 
     public void setTitle()
     {

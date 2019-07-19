@@ -33,7 +33,19 @@ public class Results extends Fragment  {
         activity = getActivity();
         ls.city2 = ls.city;
         ls.priority2 = ls.priority;
-        fDatabase.readResultsData(activity);
+
+        if(ls.price) {
+            fDatabase.readResultsData(activity);
+        }
+        else if(ls.economy){
+            fDatabase.readResultsData2(activity);
+        }
+        else if(ls.standard){
+            fDatabase.readResultsData3(activity);
+        }
+        else if(ls.luxury){
+            fDatabase.readResultsData4(activity);
+        }
 
 
     }
@@ -56,4 +68,6 @@ public class Results extends Fragment  {
 
         ls.resultUtilsList.clear();
     }
+
+
 }

@@ -13,8 +13,7 @@ public class MainActivity extends Activity {
 
    String user_Name;
    Name name = new Name();
-   Intent nameIntent;
-    ListSingleton ls;
+   ListSingleton ls;
 
     private static int SPLASH_TIME_OUT = 2000;
     TextView botTextView;
@@ -45,11 +44,12 @@ public class MainActivity extends Activity {
                 }
 
                 else {
-//                    Intent splashIntent = new Intent(MainActivity.this, Chat.class);
-//                    startActivity(splashIntent);
-//                    finish();
 
-                    if (currentUser == null)
+                    if (destroy)
+                    {
+                        finish();
+                    }
+                    else if (currentUser == null)
                     {
                         Intent i = new Intent(MainActivity.this, NavDrawer.class);
                         startActivity(i);
@@ -62,10 +62,21 @@ public class MainActivity extends Activity {
                         startActivity(i);
                         finish();
                     }
+
                 }
             }
         },SPLASH_TIME_OUT);
 
 
    }
+
+   boolean destroy = false;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        destroy = true;
+
+    }
 }

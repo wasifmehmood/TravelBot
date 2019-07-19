@@ -12,10 +12,29 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
+        android:text="About TravelBot"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/aboutText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/aboutText"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="TravelBot is a service provided by\nWasif Mehmood\nEmail:wasifmehmood20@gmail.com\nMbl:03349872647"
+        android:textSize="22sp" />
+    <TextView
+        android:id="@+id/aboutText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/aboutText2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:text="This app provides registration service to the travelling
 agencies. A travel agency can add their services. It provides a comparison service
 between the services to know which one is the best among all services registered
 to the user."
-        android:textSize="24sp"/>
+        android:textSize="22sp"/>
 
 </RelativeLayout>

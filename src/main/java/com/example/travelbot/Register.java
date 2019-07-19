@@ -56,7 +56,6 @@ public class Register extends Fragment {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_register);
 
-
         ls = ListSingleton.getInstance();
     }
 
@@ -64,8 +63,8 @@ public class Register extends Fragment {
     public void onStart() {
         super.onStart();
         activity = getActivity();
-        tv = getActivity().findViewById(R.id.regLoginTv);
-        tv.setMovementMethod(LinkMovementMethod.getInstance());
+//        tv = getActivity().findViewById(R.id.regLoginTv);
+//        tv.setMovementMethod(LinkMovementMethod.getInstance());
 
 
         regUsernameEt = getActivity().findViewById(R.id.registerUsernameEt);

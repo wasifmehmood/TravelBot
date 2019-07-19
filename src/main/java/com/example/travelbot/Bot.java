@@ -99,6 +99,8 @@ public class Bot {
             JSONObject parameters = null;
             String variable = null;
 
+            JSONObject metadata = null;
+            String intent = null;
 
 //            if (object.has("fulfillment")) {
             fulfillment = object.getJSONObject("fulfillment");
@@ -106,6 +108,9 @@ public class Bot {
             speech = fulfillment.optString("speech");
             parameters = object.getJSONObject("parameters");
             variable = parameters.optString("geo-city");
+
+            metadata = object.getJSONObject("metadata");
+            intent = metadata.optString("intentName");
 
 
             if(!(variable.equals("")) && flag) {
@@ -119,6 +124,26 @@ public class Bot {
                 variable = parameters.optString("any");
                 ls.priority = variable;
                 flag = true;
+
+                if(intent.equals("UserProvideCityName - custom"))
+                {
+                    ls.price = true;
+                }
+                else if(intent.equals("UserProvideCityName - custom-2"))
+                {
+                    ls.type = "economy";
+                    ls.economy = true;
+                }
+                else if(intent.equals("UserProvideCityName - custom-3"))
+                {
+                    ls.type = "luxury";
+                    ls.luxury = true;
+                }
+                else if(intent.equals("UserProvideCityName - custom-4"))
+                {
+                    ls.type = "standard";
+                    ls.standard = true;
+                }
             }
             count++;
 
@@ -178,7 +203,5 @@ public class Bot {
 
         }
     }
-
-
 
 }

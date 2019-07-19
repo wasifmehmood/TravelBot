@@ -124,6 +124,11 @@ public class AgencyNavDrawer extends AppCompatActivity implements NavigationView
 
         }
 
+        else if (ls.serviceFragment)
+        {
+            getSupportFragmentManager().beginTransaction().replace(R.id.agency_fragment_container,
+                    new Chat()).commit();
+        }
 
         else {
             getSupportFragmentManager().popBackStack();

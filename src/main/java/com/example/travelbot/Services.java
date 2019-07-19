@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -95,17 +96,11 @@ public class Services extends Fragment {
         super.onStart();
 
 
-//        readFromDatabase();
-
-
         String collection = "agencies", field = "email", value = ls.email;
         fDatabase.readData(collection, field, value);
 
         activity = getActivity();
         serviceListView = getActivity().findViewById(R.id.serviceListView);
-
-
-
 
 
         Log.d("b", "ddd");
@@ -127,6 +122,13 @@ public class Services extends Fragment {
         ls.serviceUtilsList.clear();
     }
 
+    Spinner typeSpinner;
+    public void addListenerOnSpinnerItemSelection(Spinner typeSpinner) {
+
+        typeSpinner = this.typeSpinner;
+        typeSpinner.setOnItemSelectedListener(new typeOnItemSelectedListener());
+
+    }
     //DIALOG
     public void customDialog()
     {
@@ -137,13 +139,16 @@ public class Services extends Fragment {
         dialog.setTitle("Title...");
 
 
+
         // set the custom dialog components - text, image and button
         serviceNameEt = dialog.findViewById(R.id.serviceNameEt);
-        serviceTypeEt = dialog.findViewById(R.id.serviceTypeEt);
+        typeSpinner = dialog.findViewById(R.id.serviceTypeEt);
         servicePriceEt = dialog.findViewById(R.id.servicePriceEt);
         serviceLinkEt = dialog.findViewById(R.id.serviceLinkEt);
         serviceFromEt = dialog.findViewById(R.id.serviceFromEt);
         serviceToEt = dialog.findViewById(R.id.serviceToEt);
+
+        addListenerOnSpinnerItemSelection(typeSpinner);
 
         Button addServiceBtn = dialog.findViewById(R.id.addServiceBtn);
 
@@ -152,50 +157,44 @@ public class Services extends Fragment {
             public void onClick(View v) {
 
                 serviceNameStr = serviceNameEt.getText().toString();
-                serviceTypeStr = serviceTypeEt.getText().toString();
                 servicePriceStr = servicePriceEt.getText().toString();
                 serviceLinkStr = serviceLinkEt.getText().toString();
                 serviceFromStr = serviceFromEt.getText().toString();
                 serviceToStr = serviceToEt.getText().toString();
 
+                if(ls.typeNo.equals("1")) {
+                serviceTypeStr = "economy";
+                }
+                else if(ls.typeNo.equals("2")) {
+                    serviceTypeStr = "standard";
+                }
+                else if(ls.typeNo.equals("3")) {
+                    serviceTypeStr = "luxury";
+                }
+
                 ls.from = serviceFromStr;
                 ls.to = serviceToStr;
 
-//                prefs = getActivity().getSharedPreferences("PREFS", MODE_PRIVATE);
-//                key = prefs.getString("key", null);
-
-
-//                String id = reference.push().getKey();
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("user_id", FirebaseAuth.getInstance().getCurrentUser().getUid());
                 map.put("name", serviceNameStr);
                 map.put("type", serviceTypeStr);
                 map.put("link", serviceLinkStr);
-//                map.put("stars", "0");
-//                map.put("key", id);
+
                 map.put("from", serviceFromStr);
                 map.put("to", serviceToStr);
-//
+                map.put("typeNo", ls.typeNo);
 
 
-//                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Services").child(ls.username).child("location")
-//                        .child(serviceFromStr).child(serviceToStr).child(serviceTypeStr);
-
-//                Map<String, Object> map1 = new HashMap<>();
                 int i = Integer.parseInt(servicePriceStr);
-                map.put("price", servicePriceStr);
+                map.put("price", Integer.parseInt(servicePriceStr));
                 map.put("stars", "0");
-//                map1.put("type", reference.getKey());
 
                 String collection = "services";
 
                 fDatabase = new FDatabase();
                 fDatabase.addData(collection, map);
-
-//                reference.setValue(map1);
-
-//                reference.child(id).child("route").setValue(mapLocation);
 
                 dialog.dismiss();
             }
@@ -204,36 +203,17 @@ public class Services extends Fragment {
         dialog.show();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-//    public void readFromDatabase()
-////    {
-////
-////        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Agencies");
-////        reference.orderByChild("email").equalTo(FirebaseAuth.getInstance().getCurrentUser().getEmail()).addValueEventListener(new ValueEventListener() {
-////            @Override
-////            public void onDataChange(DataSnapshot dataSnapshot) {
-////                // This method is called once with the initial value and again
-////                // whenever data at this location is updated.
-////                Toast.makeText(getActivity(), "Realy"+FirebaseAuth.getInstance().getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
-////
-////                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
-////                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-////                        HashMap<String, String> map = (HashMap<String, String>) snapshot.getValue();
-////                        Toast.makeText(getActivity(), "Realy", Toast.LENGTH_SHORT).show();
-////
-////                        ls.username = map.get("username");
-////
-////                    }
-////                }
-////            }
-////
-////            @Override
-////            public void onCancelled(@NonNull DatabaseError databaseError) {
-////
-////            }
-////        });
-//    }
+        ls.serviceFragment = true;
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
 
-
+        ls.serviceFragment = false;
+    }
 }

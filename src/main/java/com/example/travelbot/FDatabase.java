@@ -372,7 +372,7 @@ String from;
     {
 
 
-        db.collection("services").whereEqualTo("to", ls.city2.toLowerCase())
+        db.collection("services").whereEqualTo("to", ls.city2.toLowerCase()).orderBy("price")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -398,6 +398,99 @@ String from;
                 });
     }
 
+    void readResultsData2(final Activity activity)
+    {
+
+
+        db.collection("services").whereEqualTo("to", ls.city2.toLowerCase()).whereEqualTo("type", "economy")
+                .orderBy("stars", Query.Direction.DESCENDING)
+                .orderBy("price")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("city", " => " + ls.city2.toLowerCase());
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Log.d("bbbb", "bbb");
+                                Log.d("bbbb", document.getId() + " => " + document.getData());
+
+                                HashMap<String, Object> map = (HashMap<String, Object>) document.getData();
+                                ls.resultUtilsList.add(new ResultUtils(map.get("name"),map.get("type"), map.get("stars"), map.get("price")));
+                                Log.d("bbbb", document.getId() + " => " + map.get("name"));
+
+                                threadResult(activity);
+
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+    void readResultsData3(final Activity activity)
+    {
+
+
+        db.collection("services").whereEqualTo("to", ls.city2.toLowerCase()).whereEqualTo("type", "standard")
+                .orderBy("stars", Query.Direction.DESCENDING)
+                .orderBy("price")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("city", " => " + ls.city2.toLowerCase());
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Log.d("bbbb", "bbb");
+                                Log.d("bbbb", document.getId() + " => " + document.getData());
+
+                                HashMap<String, Object> map = (HashMap<String, Object>) document.getData();
+                                ls.resultUtilsList.add(new ResultUtils(map.get("name"),map.get("type"), map.get("stars"), map.get("price")));
+                                Log.d("bbbb", document.getId() + " => " + map.get("name"));
+
+                                threadResult(activity);
+
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+    void readResultsData4(final Activity activity)
+    {
+
+
+        db.collection("services").whereEqualTo("to", ls.city2.toLowerCase()).whereEqualTo("type", "luxury")
+                .orderBy("stars", Query.Direction.DESCENDING)
+                .orderBy("price")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("city", " => " + ls.city2.toLowerCase());
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Log.d("bbbb", "bbb");
+                                Log.d("bbbb", document.getId() + " => " + document.getData());
+
+                                HashMap<String, Object> map = (HashMap<String, Object>) document.getData();
+                                ls.resultUtilsList.add(new ResultUtils(map.get("name"),map.get("type"), map.get("stars"), map.get("price")));
+                                Log.d("bbbb", document.getId() + " => " + map.get("name"));
+
+                                threadResult(activity);
+
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
     void threadResult(final Activity activity)
     {
         thread = new Thread(){
@@ -415,6 +508,11 @@ String from;
                                 ls.resultsCustomAdapter = new ResultsCustomAdapter(activity, ls.resultUtilsList);
                                 ls.resultListView.setAdapter(ls.resultsCustomAdapter);
                                 Log.d("bbbb", "cxcc");
+
+                                ls.price = false;
+                                ls.luxury = false;
+                                ls.standard = false;
+                                ls.economy = false;
                             }
                         });
 

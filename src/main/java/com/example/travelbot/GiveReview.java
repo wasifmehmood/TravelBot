@@ -126,7 +126,7 @@ public class GiveReview extends Fragment {
                 if (item != null) {
 
                     ls.list2.clear();
-//                    readFromDatabase2();
+
                     try {
                         fDatabase.readDataForSpinner2(collectionServices2, spinner.getSelectedItem().toString(), getActivity());
                     } catch (Exception e) {
@@ -134,8 +134,7 @@ public class GiveReview extends Fragment {
                     }
 
                 }
-//                Toast.makeText(MainActivity.this, "Selected",
-//                        Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -175,17 +174,12 @@ public class GiveReview extends Fragment {
     public void onResume() {
         super.onResume();
 
-//        fDatabase.readDataForSpinner2(collection2, spinner.getSelectedItem().toString());
-
     }
 
     public void addItemsOnSpinner(String username, Activity activity) {
         spinner = activity.findViewById(R.id.spinner);
 
         ls.list.add(username);
-//        list.add("daewoo");
-//        list.add("niazi");
-//        list.add("skyways");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity,
                 android.R.layout.simple_spinner_item, ls.list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -199,9 +193,7 @@ public class GiveReview extends Fragment {
 
 
         ls.list2.add(type);
-//        list2.add("daewoo");
-//        list2.add("niazi");
-//        list2.add("skyways");
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity,
                 android.R.layout.simple_spinner_item, ls.list2);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -215,9 +207,6 @@ public class GiveReview extends Fragment {
 
 
         ls.list3.add(from);
-//        list2.add("daewoo");
-//        list2.add("niazi");
-//        list2.add("skyways");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity,
                 android.R.layout.simple_spinner_item, ls.list3);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -230,141 +219,11 @@ public class GiveReview extends Fragment {
 
 
         ls.list4.add(to);
-//        list2.add("daewoo");
-//        list2.add("niazi");
-//        list2.add("skyways");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity,
                 android.R.layout.simple_spinner_item, ls.list4);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner4.setAdapter(dataAdapter);
     }
-//
-//public void readFromDatabase()
-//    {
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Agencies");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        HashMap<String, String> map = (HashMap<String, String>) snapshot.getValue();
-//
-//                        username = map.get("username");
-//                        if(flag)
-//                        {
-//                            addItemsOnSpinner();
-//                            readFromDatabase2();
-//                            Toast.makeText(getActivity(), "" + username, Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }
-//    }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-//
-//
-//
-//    public void readFromDatabase2()
-//    {
-//
-//        readFromDatabase4();
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Services").child(username).child("location")
-//                .child(from).child(to);
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        HashMap<String, String> map = (HashMap<String, String>) snapshot.getValue();
-//
-//                        type = snapshot.getKey();
-////                        type = map.get("type");
-//                        if(!(list2.contains(type)))
-//                        {
-//                            addItemsOnSpinner2();
-//                        }
-//
-//                    }
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-//    String from, to;
-//    public void readFromDatabase4()
-//    {
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Services").child(username).child("location");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        HashMap<String, String> map = (HashMap<String, String>) snapshot.getValue();
-//
-//                        from = snapshot.getKey();
-////                        type = map.get("type");
-////                        to = reference.child(from).getKey();
-//                        Log.d("aa","from"+from);
-////                        Log.d("aa","to"+to);
-//                    }
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-//    public void readFromDatabase5()
-//    {
-//
-//        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Services");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-////                Toast.makeText(getActivity(), "Realy"+FirebaseAuth.getInstance().getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
-//
-//                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        HashMap<String, String> map = (HashMap<String, String>) snapshot.getValue();
-//                        Toast.makeText(getActivity(), "Realy", Toast.LENGTH_SHORT).show();
-//
-//                        ls.username = snapshot.getKey();
-//
-//                        Log.d("aa",""+ls.username);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 
 
 DatabaseReference reference;
@@ -381,37 +240,6 @@ DatabaseReference reference;
 
     }
 
-//    public void readFromDatabase3()
-//    {
-//        Log.d("aaaa","before"+spinner.getSelectedItem().toString());
-//        Log.d("aaaa","before"+spinner2.getSelectedItem().toString());
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Services")
-//                .child(spinner.getSelectedItem().toString());
-//        reference.orderByChild("type").equalTo(spinner2.getSelectedItem().toString()).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//               Log.d("aaaa","before"+key);
-//
-//                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        HashMap<String, String> map = (HashMap<String, String>) snapshot.getValue();
-//
-//                        key = map.get("key");
-//                        Log.d("","after"+key);
-//
-//                    }
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 
     @Override
     public void onPause() {
